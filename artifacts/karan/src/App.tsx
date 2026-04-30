@@ -73,7 +73,7 @@ function Landing() {
         </div>
 
         <a
-          href="https://discord.gg/karan" // TODO: Swap with real Discord invite
+          href="https://discord.gg/Xh5jHuU2m"
           target="_blank"
           rel="noopener noreferrer"
           className="btn-neon mt-4 flex items-center justify-center gap-3 px-8 py-4 w-full sm:w-auto min-w-[240px] rounded-sm group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black"
