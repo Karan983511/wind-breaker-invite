@@ -66,9 +66,9 @@ function Landing() {
         <div className="glitch-wrapper">
           <h1 
             className="glitch-text text-5xl sm:text-7xl md:text-[6rem] font-bold text-white tracking-tighter"
-            data-text="KARAN.EXE"
+            data-text="Ace ⚡"
           >
-            KARAN.EXE
+            Ace ⚡
           </h1>
         </div>
 
