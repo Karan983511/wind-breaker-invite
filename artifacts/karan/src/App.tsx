@@ -8,6 +8,7 @@ function Landing() {
   const intervalRef = useRef<number | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
+  const [flashing, setFlashing] = useState(false);
 
   useEffect(() => {
     const startTimedGlitch = () => {
@@ -32,6 +33,8 @@ function Landing() {
           }
           setHasInteracted(true);
           setHintVisible(false);
+          setFlashing(true);
+          window.setTimeout(() => setFlashing(false), 240);
           startTimedGlitch();
         }
       } catch (error) {
@@ -58,6 +61,9 @@ function Landing() {
     <main className="relative min-h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden">
       {/* CRT overlay */}
       <div className="scanlines" />
+
+      {/* Audio-start glitch flash */}
+      {flashing && <div key={Date.now()} className="glitch-flash" />}
 
       {/* Background Video */}
       <video

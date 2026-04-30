@@ -274,6 +274,56 @@
   transition: all 0.08s ease-out;
 }
 
+/* Audio-start glitch flash burst */
+.glitch-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: glitch-flash 220ms steps(6, end) forwards;
+}
+
+@keyframes glitch-flash {
+  0% {
+    background:
+      linear-gradient(90deg, rgba(255,0,255,0.6) 0%, rgba(0,255,255,0.6) 100%),
+      rgba(255,255,255,0.95);
+    transform: translate(0, 0) skewX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+  20% {
+    background:
+      linear-gradient(90deg, rgba(0,255,255,0.7) 0%, rgba(255,0,255,0.7) 100%),
+      rgba(255,255,255,0.4);
+    transform: translate(-8px, 4px) skewX(3deg);
+    opacity: 0.9;
+  }
+  40% {
+    background: rgba(255,255,255,0.7);
+    transform: translate(6px, -3px) skewX(-2deg);
+    opacity: 0.8;
+  }
+  60% {
+    background:
+      linear-gradient(0deg, rgba(255,0,255,0.5), rgba(0,255,255,0.5));
+    transform: translate(-4px, 2px) skewX(1deg);
+    opacity: 0.6;
+  }
+  80% {
+    background: rgba(0,255,255,0.25);
+    transform: translate(2px, -1px) skewX(0);
+    opacity: 0.3;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) skewX(0);
+    filter: blur(4px);
+  }
+}
+
 /* Page load fade-in */
 .fade-in {
   animation: fade-in 1.2s ease-out both;
