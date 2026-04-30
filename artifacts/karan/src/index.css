@@ -274,17 +274,17 @@
   transition: all 0.08s ease-out;
 }
 
-/* Localized tap-point Spider-Verse style staccato glitch */
+/* Localized tap-point firework-glitch burst (0→100 rapid expansion + RGB flicker) */
 .glitch-burst {
   position: fixed;
-  width: 64px;
-  height: 64px;
-  margin-left: -32px;
-  margin-top: -32px;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
   z-index: 50;
   pointer-events: none;
   mix-blend-mode: screen;
-  animation: glitch-burst-frames 160ms step-end forwards;
+  animation: glitch-burst-explode 220ms step-end forwards;
 }
 
 .glitch-burst::before,
@@ -293,45 +293,50 @@
   position: absolute;
   inset: 0;
   mix-blend-mode: screen;
+  /* 8-point starburst silhouette */
+  clip-path: polygon(
+    50% 0%, 60% 38%, 100% 50%, 60% 62%,
+    50% 100%, 40% 62%, 0% 50%, 40% 38%
+  );
 }
 
 .glitch-burst::before {
-  background: rgba(255, 0, 255, 0.85);
-  clip-path: polygon(15% 20%, 85% 10%, 90% 60%, 20% 75%);
-  box-shadow: 0 0 4px rgba(255, 0, 255, 0.6);
-  animation: glitch-burst-magenta 160ms step-end forwards;
+  background: rgba(255, 0, 255, 0.95);
+  box-shadow: 0 0 8px rgba(255, 0, 255, 0.7);
+  animation: glitch-burst-magenta 220ms step-end forwards;
 }
 
 .glitch-burst::after {
-  background: rgba(0, 255, 255, 0.85);
-  clip-path: polygon(10% 35%, 80% 25%, 95% 80%, 25% 90%);
-  box-shadow: 0 0 4px rgba(0, 255, 255, 0.6);
-  animation: glitch-burst-cyan 160ms step-end forwards;
+  background: rgba(0, 255, 255, 0.95);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+  animation: glitch-burst-cyan 220ms step-end forwards;
 }
 
-/* Hard-cut frame flicker, no interpolation */
-@keyframes glitch-burst-frames {
-  0%   { opacity: 1; transform: scale(1)    skewX(0);   }
-  20%  { opacity: 0; transform: scale(1)    skewX(0);   }
-  35%  { opacity: 1; transform: scale(0.85) skewX(4deg);}
-  55%  { opacity: 0; transform: scale(1)    skewX(0);   }
-  70%  { opacity: 1; transform: scale(1.1)  skewX(-3deg);}
-  90%  { opacity: 0; transform: scale(1)    skewX(0);   }
-  100% { opacity: 0; }
+/* Stepped 0→100 expansion with hard-cut flicker */
+@keyframes glitch-burst-explode {
+  0%   { transform: scale(0.05); opacity: 1; }
+  15%  { transform: scale(0.6);  opacity: 1; }
+  30%  { transform: scale(0.6);  opacity: 0; }
+  45%  { transform: scale(1.4);  opacity: 1; }
+  60%  { transform: scale(1.4);  opacity: 0; }
+  75%  { transform: scale(2.2);  opacity: 1; }
+  100% { transform: scale(2.6);  opacity: 0; }
 }
 
 @keyframes glitch-burst-magenta {
-  0%   { transform: translate(3px, 0);   clip-path: polygon(15% 20%, 85% 10%, 90% 60%, 20% 75%); }
-  35%  { transform: translate(-5px, 2px);clip-path: polygon(0% 40%, 70% 30%, 100% 70%, 10% 80%); }
-  70%  { transform: translate(4px, -3px);clip-path: polygon(20% 0%, 100% 25%, 80% 90%, 0% 60%); }
-  100% { transform: translate(0, 0); }
+  0%   { transform: translate(0, 0)     rotate(0);    }
+  15%  { transform: translate(4px, -2px) rotate(8deg);  }
+  45%  { transform: translate(-6px, 3px) rotate(-12deg);}
+  75%  { transform: translate(5px, -4px) rotate(20deg); }
+  100% { transform: translate(0, 0)     rotate(0);    }
 }
 
 @keyframes glitch-burst-cyan {
-  0%   { transform: translate(-3px, 0);  clip-path: polygon(10% 35%, 80% 25%, 95% 80%, 25% 90%); }
-  35%  { transform: translate(5px, -2px);clip-path: polygon(30% 10%, 100% 50%, 70% 100%, 0% 70%);}
-  70%  { transform: translate(-4px, 3px);clip-path: polygon(0% 20%, 75% 0%, 100% 80%, 30% 100%);}
-  100% { transform: translate(0, 0); }
+  0%   { transform: translate(0, 0)      rotate(0);    }
+  15%  { transform: translate(-4px, 2px) rotate(-8deg); }
+  45%  { transform: translate(6px, -3px) rotate(12deg); }
+  75%  { transform: translate(-5px, 4px) rotate(-20deg);}
+  100% { transform: translate(0, 0)      rotate(0);    }
 }
 
 /* Page load fade-in */
