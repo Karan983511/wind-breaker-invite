@@ -77,12 +77,12 @@ function Landing() {
       <div className="fixed inset-0 z-[-1] bg-black/40 bg-gradient-to-b from-transparent via-black/20 to-black/90" />
 
       {/* Username badge */}
-      <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-mono text-white/50 select-none">
+      <div className="fade-in absolute top-4 left-4 sm:top-6 sm:left-6 z-20 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-mono text-white/50 select-none" style={{ textShadow: '0 0 8px rgba(0, 255, 255, 0.5)' }}>
         <span className="text-primary/70">@</span>karankk0415v
       </div>
 
       {/* Main Content */}
-      <div className="z-10 flex flex-col items-center justify-center gap-8 px-4 w-full max-w-2xl">
+      <div className="fade-in-delayed z-10 flex flex-col items-center justify-center gap-8 px-4 w-full max-w-2xl">
         <div className="glitch-wrapper">
           <h1 
             ref={titleRef}

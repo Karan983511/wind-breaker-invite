@@ -264,3 +264,34 @@
 .btn-neon:hover::before {
   left: 100%;
 }
+
+.btn-neon:active {
+  transform: scale(0.96);
+  box-shadow:
+    0 0 30px rgba(0, 255, 255, 0.9),
+    0 0 60px rgba(255, 0, 255, 0.4),
+    inset 0 0 20px rgba(0, 255, 255, 0.3);
+  transition: all 0.08s ease-out;
+}
+
+/* Page load fade-in */
+.fade-in {
+  animation: fade-in 1.2s ease-out both;
+}
+
+.fade-in-delayed {
+  animation: fade-in 1.4s ease-out 0.25s both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
