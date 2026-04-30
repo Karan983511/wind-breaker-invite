@@ -157,6 +157,38 @@
   animation: glitch-anim-2 3s infinite linear alternate-reverse;
 }
 
+/* Beat-reactive intensified glitch state */
+.glitch-text.glitching {
+  animation: jitter-hard 120ms steps(2);
+  text-shadow:
+    0 0 14px rgba(0, 255, 255, 1),
+    0 0 28px rgba(255, 0, 255, 0.8),
+    0 0 60px rgba(0, 255, 255, 0.5);
+}
+
+.glitch-text.glitching::before {
+  left: 8px;
+  text-shadow: -6px 0 #ff00ff, 0 0 12px #ff00ff;
+  animation: glitch-anim-1 200ms infinite linear alternate-reverse;
+  opacity: 1;
+}
+
+.glitch-text.glitching::after {
+  left: -8px;
+  text-shadow: -6px 0 #00ffff, 6px 6px #ff00ff, 0 0 12px #00ffff;
+  animation: glitch-anim-2 220ms infinite linear alternate-reverse;
+  opacity: 1;
+}
+
+@keyframes jitter-hard {
+  0%   { transform: translate(0, 0) skewX(0); }
+  20%  { transform: translate(-4px, 2px) skewX(-3deg); }
+  40%  { transform: translate(5px, -1px) skewX(2deg); }
+  60%  { transform: translate(-2px, 3px) skewX(1deg); }
+  80%  { transform: translate(3px, -2px) skewX(-2deg); }
+  100% { transform: translate(0, 0) skewX(0); }
+}
+
 @keyframes jitter {
   0%, 9.999%, 10.2%, 100% { transform: translateX(0); }
   10% { transform: translateX(-2px) skewX(2deg); }

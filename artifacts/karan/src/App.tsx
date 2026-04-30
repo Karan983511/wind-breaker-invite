@@ -4,30 +4,75 @@ import { SiDiscord } from "react-icons/si";
 
 function Landing() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const rafRef = useRef<number | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
 
   useEffect(() => {
+    const startBeatDetection = () => {
+      const video = videoRef.current;
+      const title = titleRef.current;
+      if (!video || !title || audioCtxRef.current) return;
+
+      try {
+        const Ctx =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext })
+            .webkitAudioContext;
+        const ctx = new Ctx();
+        audioCtxRef.current = ctx;
+
+        const src = ctx.createMediaElementSource(video);
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 64;
+        src.connect(analyser);
+        analyser.connect(ctx.destination);
+
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        let cooldownUntil = 0;
+
+        const tick = () => {
+          analyser.getByteFrequencyData(dataArray);
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+          const avg = sum / dataArray.length;
+
+          const now = performance.now();
+          if (avg > 140 && now > cooldownUntil) {
+            title.classList.add("glitching");
+            cooldownUntil = now + 140;
+            window.setTimeout(() => title.classList.remove("glitching"), 120);
+          }
+
+          rafRef.current = requestAnimationFrame(tick);
+        };
+
+        rafRef.current = requestAnimationFrame(tick);
+      } catch (error) {
+        console.error("Beat detection setup failed", error);
+      }
+    };
+
     const handleInteraction = async () => {
       if (hasInteracted) return;
-      
+
       try {
         if (videoRef.current) {
           videoRef.current.muted = false;
-          // Attempt to play if it was paused
           if (videoRef.current.paused) {
             await videoRef.current.play();
           }
           setHasInteracted(true);
           setHintVisible(false);
+          startBeatDetection();
         }
       } catch (error) {
         console.error("Autoplay failed on interaction", error);
-        // Keep hint visible if it fails so they can try again
       }
     };
 
-    // Listen to standard interaction events
     window.addEventListener("click", handleInteraction);
     window.addEventListener("touchstart", handleInteraction);
     window.addEventListener("keydown", handleInteraction);
@@ -36,6 +81,11 @@ function Landing() {
       window.removeEventListener("click", handleInteraction);
       window.removeEventListener("touchstart", handleInteraction);
       window.removeEventListener("keydown", handleInteraction);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close().catch(() => {});
+        audioCtxRef.current = null;
+      }
     };
   }, [hasInteracted]);
 
@@ -70,6 +120,7 @@ function Landing() {
       <div className="z-10 flex flex-col items-center justify-center gap-8 px-4 w-full max-w-2xl">
         <div className="glitch-wrapper">
           <h1 
+            ref={titleRef}
             className="glitch-text text-5xl sm:text-7xl md:text-[6rem] font-bold text-white tracking-tighter"
             data-text="Ace ⚡"
           >
