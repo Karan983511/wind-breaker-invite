@@ -8,7 +8,7 @@ function Landing() {
   const intervalRef = useRef<number | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
-  const [flashing, setFlashing] = useState(false);
+  const [bursts, setBursts] = useState<Array<{ id: number; x: number; y: number }>>([]);
 
   useEffect(() => {
     const startTimedGlitch = () => {
@@ -22,7 +22,27 @@ function Landing() {
       }, 500);
     };
 
-    const handleInteraction = async () => {
+    const spawnBurst = (x: number, y: number) => {
+      const id = Date.now() + Math.random();
+      setBursts((prev) => [...prev, { id, x, y }]);
+      window.setTimeout(() => {
+        setBursts((prev) => prev.filter((b) => b.id !== id));
+      }, 250);
+    };
+
+    const handleInteraction = async (e: MouseEvent | TouchEvent | KeyboardEvent) => {
+      let x = window.innerWidth / 2;
+      let y = window.innerHeight / 2;
+      if (e instanceof MouseEvent) {
+        x = e.clientX;
+        y = e.clientY;
+      } else if (typeof TouchEvent !== "undefined" && e instanceof TouchEvent && e.touches[0]) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      }
+
+      spawnBurst(x, y);
+
       if (hasInteracted) return;
 
       try {
@@ -33,8 +53,6 @@ function Landing() {
           }
           setHasInteracted(true);
           setHintVisible(false);
-          setFlashing(true);
-          window.setTimeout(() => setFlashing(false), 240);
           startTimedGlitch();
         }
       } catch (error) {
@@ -62,8 +80,14 @@ function Landing() {
       {/* CRT overlay */}
       <div className="scanlines" />
 
-      {/* Audio-start glitch flash */}
-      {flashing && <div key={Date.now()} className="glitch-flash" />}
+      {/* Tap-point glitch bursts */}
+      {bursts.map((b) => (
+        <div
+          key={b.id}
+          className="glitch-burst"
+          style={{ left: b.x, top: b.y }}
+        />
+      ))}
 
       {/* Background Video */}
       <video
