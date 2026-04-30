@@ -274,73 +274,64 @@
   transition: all 0.08s ease-out;
 }
 
-/* Localized tap-point micro RGB-shard burst (small, layered, fast) */
+/* Localized tap-point staccato flicker (tiny, ~20% scale) */
 .glitch-burst {
   position: fixed;
-  width: 6px;
-  height: 6px;
-  margin-left: -3px;
-  margin-top: -3px;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
   z-index: 50;
   pointer-events: none;
   mix-blend-mode: screen;
-  animation: glitch-burst-core 160ms ease-out forwards;
-}
-
-/* White micro-core */
-.glitch-burst {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 50%;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  animation: glitch-burst-frames 140ms step-end forwards;
 }
 
 .glitch-burst::before,
 .glitch-burst::after {
   content: '';
   position: absolute;
-  inset: -2px;
-  border-radius: 50%;
+  inset: 0;
   mix-blend-mode: screen;
 }
 
-/* Magenta shards: 4 fragments via box-shadow at small offsets */
 .glitch-burst::before {
-  background: rgba(255, 0, 255, 0.9);
-  box-shadow:
-    -10px -4px 0 -1px rgba(255, 0, 255, 0.85),
-     12px  6px 0 -1px rgba(255, 0, 255, 0.75),
-     -6px  10px 0 -1px rgba(255, 0, 255, 0.7),
-      8px -10px 0 -1px rgba(255, 0, 255, 0.7);
-  animation: glitch-burst-magenta 160ms ease-out forwards;
+  background: rgba(255, 0, 255, 0.85);
+  clip-path: polygon(15% 20%, 85% 10%, 90% 60%, 20% 75%);
+  box-shadow: 0 0 2px rgba(255, 0, 255, 0.6);
+  animation: glitch-burst-magenta 140ms step-end forwards;
 }
 
-/* Cyan shards: 4 fragments mirrored on the opposite side */
 .glitch-burst::after {
-  background: rgba(0, 255, 255, 0.9);
-  box-shadow:
-     10px -6px 0 -1px rgba(0, 255, 255, 0.85),
-    -12px  4px 0 -1px rgba(0, 255, 255, 0.75),
-      6px  12px 0 -1px rgba(0, 255, 255, 0.7),
-     -8px -10px 0 -1px rgba(0, 255, 255, 0.7);
-  animation: glitch-burst-cyan 160ms ease-out forwards;
+  background: rgba(0, 255, 255, 0.85);
+  clip-path: polygon(10% 35%, 80% 25%, 95% 80%, 25% 90%);
+  box-shadow: 0 0 2px rgba(0, 255, 255, 0.6);
+  animation: glitch-burst-cyan 140ms step-end forwards;
 }
 
-@keyframes glitch-burst-core {
-  0%   { transform: scale(0.4); opacity: 1; }
-  30%  { transform: scale(1.6); opacity: 1; }
-  100% { transform: scale(2.2); opacity: 0; }
+/* Hard-cut frame flicker, no interpolation */
+@keyframes glitch-burst-frames {
+  0%   { opacity: 1; transform: scale(1)    skewX(0);   }
+  20%  { opacity: 0; transform: scale(1)    skewX(0);   }
+  35%  { opacity: 1; transform: scale(0.85) skewX(3deg);}
+  55%  { opacity: 0; transform: scale(1)    skewX(0);   }
+  70%  { opacity: 1; transform: scale(1.1)  skewX(-2deg);}
+  90%  { opacity: 0; transform: scale(1)    skewX(0);   }
+  100% { opacity: 0; }
 }
 
 @keyframes glitch-burst-magenta {
-  0%   { transform: scale(0.3) translate(0, 0); opacity: 0.95; }
-  40%  { transform: scale(2.4) translate(-1px, 1px); opacity: 0.85; }
-  100% { transform: scale(3.4) translate(-2px, 2px); opacity: 0; }
+  0%   { transform: translate(1px, 0);   clip-path: polygon(15% 20%, 85% 10%, 90% 60%, 20% 75%); }
+  35%  { transform: translate(-1px, 1px);clip-path: polygon(0% 40%, 70% 30%, 100% 70%, 10% 80%); }
+  70%  { transform: translate(1px, -1px);clip-path: polygon(20% 0%, 100% 25%, 80% 90%, 0% 60%); }
+  100% { transform: translate(0, 0); }
 }
 
 @keyframes glitch-burst-cyan {
-  0%   { transform: scale(0.3) translate(0, 0); opacity: 0.95; }
-  40%  { transform: scale(2.4) translate(1px, -1px); opacity: 0.85; }
-  100% { transform: scale(3.4) translate(2px, -2px); opacity: 0; }
+  0%   { transform: translate(-1px, 0);  clip-path: polygon(10% 35%, 80% 25%, 95% 80%, 25% 90%); }
+  35%  { transform: translate(1px, -1px);clip-path: polygon(30% 10%, 100% 50%, 70% 100%, 0% 70%);}
+  70%  { transform: translate(-1px, 1px);clip-path: polygon(0% 20%, 75% 0%, 100% 80%, 30% 100%);}
+  100% { transform: translate(0, 0); }
 }
 
 /* Page load fade-in */
