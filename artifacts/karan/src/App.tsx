@@ -72,6 +72,10 @@ function Landing() {
           </h1>
         </div>
 
+        <p className="-mt-4 text-xs sm:text-sm tracking-[0.35em] uppercase text-primary/80 font-mono">
+          <span className="text-white/40">@</span>karankk0415v
+        </p>
+
         <a
           href="https://discord.gg/Xh5jHuU2m"
           target="_blank"
