@@ -87,9 +87,9 @@ function Landing() {
           <h1 
             ref={titleRef}
             className="glitch-text text-5xl sm:text-7xl md:text-[6rem] font-bold text-white tracking-tighter"
-            data-text="Wind Breaker 🍁"
+            data-text="🍁"
           >
-            Wind Breaker <span className="text-[0.6em] align-middle">🍁</span>
+            🍁
           </h1>
         </div>
 
