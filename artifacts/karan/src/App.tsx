@@ -61,6 +61,11 @@ function Landing() {
       {/* Dark Gradient Overlay */}
       <div className="fixed inset-0 z-[-1] bg-black/40 bg-gradient-to-b from-transparent via-black/20 to-black/90" />
 
+      {/* Username badge */}
+      <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-mono text-white/50 select-none">
+        <span className="text-primary/70">@</span>karankk0415v
+      </div>
+
       {/* Main Content */}
       <div className="z-10 flex flex-col items-center justify-center gap-8 px-4 w-full max-w-2xl">
         <div className="glitch-wrapper">
@@ -71,10 +76,6 @@ function Landing() {
             Ace <span className="text-[0.6em] align-middle">⚡</span>
           </h1>
         </div>
-
-        <p className="-mt-4 text-xs sm:text-sm tracking-[0.35em] uppercase text-primary/80 font-mono">
-          <span className="text-white/40">@</span>karankk0415v
-        </p>
 
         <a
           href="https://discord.gg/Xh5jHuU2m"
