@@ -274,69 +274,73 @@
   transition: all 0.08s ease-out;
 }
 
-/* Localized tap-point firework-glitch burst (0→100 rapid expansion + RGB flicker) */
+/* Localized tap-point micro RGB-shard burst (small, layered, fast) */
 .glitch-burst {
   position: fixed;
-  width: 100px;
-  height: 100px;
-  margin-left: -50px;
-  margin-top: -50px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
   z-index: 50;
   pointer-events: none;
   mix-blend-mode: screen;
-  animation: glitch-burst-explode 220ms step-end forwards;
+  animation: glitch-burst-core 160ms ease-out forwards;
+}
+
+/* White micro-core */
+.glitch-burst {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
 }
 
 .glitch-burst::before,
 .glitch-burst::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -2px;
+  border-radius: 50%;
   mix-blend-mode: screen;
-  /* 8-point starburst silhouette */
-  clip-path: polygon(
-    50% 0%, 60% 38%, 100% 50%, 60% 62%,
-    50% 100%, 40% 62%, 0% 50%, 40% 38%
-  );
 }
 
+/* Magenta shards: 4 fragments via box-shadow at small offsets */
 .glitch-burst::before {
-  background: rgba(255, 0, 255, 0.95);
-  box-shadow: 0 0 8px rgba(255, 0, 255, 0.7);
-  animation: glitch-burst-magenta 220ms step-end forwards;
+  background: rgba(255, 0, 255, 0.9);
+  box-shadow:
+    -10px -4px 0 -1px rgba(255, 0, 255, 0.85),
+     12px  6px 0 -1px rgba(255, 0, 255, 0.75),
+     -6px  10px 0 -1px rgba(255, 0, 255, 0.7),
+      8px -10px 0 -1px rgba(255, 0, 255, 0.7);
+  animation: glitch-burst-magenta 160ms ease-out forwards;
 }
 
+/* Cyan shards: 4 fragments mirrored on the opposite side */
 .glitch-burst::after {
-  background: rgba(0, 255, 255, 0.95);
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
-  animation: glitch-burst-cyan 220ms step-end forwards;
+  background: rgba(0, 255, 255, 0.9);
+  box-shadow:
+     10px -6px 0 -1px rgba(0, 255, 255, 0.85),
+    -12px  4px 0 -1px rgba(0, 255, 255, 0.75),
+      6px  12px 0 -1px rgba(0, 255, 255, 0.7),
+     -8px -10px 0 -1px rgba(0, 255, 255, 0.7);
+  animation: glitch-burst-cyan 160ms ease-out forwards;
 }
 
-/* Stepped 0→100 expansion with hard-cut flicker */
-@keyframes glitch-burst-explode {
-  0%   { transform: scale(0.05); opacity: 1; }
-  15%  { transform: scale(0.6);  opacity: 1; }
-  30%  { transform: scale(0.6);  opacity: 0; }
-  45%  { transform: scale(1.4);  opacity: 1; }
-  60%  { transform: scale(1.4);  opacity: 0; }
-  75%  { transform: scale(2.2);  opacity: 1; }
-  100% { transform: scale(2.6);  opacity: 0; }
+@keyframes glitch-burst-core {
+  0%   { transform: scale(0.4); opacity: 1; }
+  30%  { transform: scale(1.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
 }
 
 @keyframes glitch-burst-magenta {
-  0%   { transform: translate(0, 0)     rotate(0);    }
-  15%  { transform: translate(4px, -2px) rotate(8deg);  }
-  45%  { transform: translate(-6px, 3px) rotate(-12deg);}
-  75%  { transform: translate(5px, -4px) rotate(20deg); }
-  100% { transform: translate(0, 0)     rotate(0);    }
+  0%   { transform: scale(0.3) translate(0, 0); opacity: 0.95; }
+  40%  { transform: scale(2.4) translate(-1px, 1px); opacity: 0.85; }
+  100% { transform: scale(3.4) translate(-2px, 2px); opacity: 0; }
 }
 
 @keyframes glitch-burst-cyan {
-  0%   { transform: translate(0, 0)      rotate(0);    }
-  15%  { transform: translate(-4px, 2px) rotate(-8deg); }
-  45%  { transform: translate(6px, -3px) rotate(12deg); }
-  75%  { transform: translate(-5px, 4px) rotate(-20deg);}
-  100% { transform: translate(0, 0)      rotate(0);    }
+  0%   { transform: scale(0.3) translate(0, 0); opacity: 0.95; }
+  40%  { transform: scale(2.4) translate(1px, -1px); opacity: 0.85; }
+  100% { transform: scale(3.4) translate(2px, -2px); opacity: 0; }
 }
 
 /* Page load fade-in */
