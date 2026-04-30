@@ -1,0 +1,5 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="180" height="180" fill="#0A0A0A"/>
+<path d="M50 40H75V80L110 40H140L95 90L145 140H115L80 100L75 105V140H50V40Z" fill="#00FFFF" style="filter: drop-shadow(0 0 10px #00FFFF);"/>
+<path d="M52 40H77V80L112 40H142L97 90L147 140H117L82 100L77 105V140H52V40Z" fill="#FF00FF" opacity="0.6" style="mix-blend-mode: screen;"/>
+</svg>

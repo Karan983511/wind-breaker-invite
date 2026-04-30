@@ -16,6 +16,10 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
 
+## Artifacts
+
+- `artifacts/karan` — KARAN.EXE landing page (React + Vite). Single-page dark/anime/glitch link page with fullscreen looping background video, glowing KARAN.EXE title, neon Discord button, and "tap for sound" interaction. Drop the background video file at `artifacts/karan/public/karan.mp4` (the page references this exact path).
+
 ## Key Commands
 
 - `pnpm run typecheck` — full typecheck across all packages
