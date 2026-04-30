@@ -5,54 +5,20 @@ import { SiDiscord } from "react-icons/si";
 function Landing() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const rafRef = useRef<number | null>(null);
+  const intervalRef = useRef<number | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
 
   useEffect(() => {
-    const startBeatDetection = () => {
-      const video = videoRef.current;
+    const startTimedGlitch = () => {
       const title = titleRef.current;
-      if (!video || !title || audioCtxRef.current) return;
+      if (!title || intervalRef.current !== null) return;
 
-      try {
-        const Ctx =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext })
-            .webkitAudioContext;
-        const ctx = new Ctx();
-        audioCtxRef.current = ctx;
-
-        const src = ctx.createMediaElementSource(video);
-        const analyser = ctx.createAnalyser();
-        analyser.fftSize = 64;
-        src.connect(analyser);
-        analyser.connect(ctx.destination);
-
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
-        let cooldownUntil = 0;
-
-        const tick = () => {
-          analyser.getByteFrequencyData(dataArray);
-          let sum = 0;
-          for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
-          const avg = sum / dataArray.length;
-
-          const now = performance.now();
-          if (avg > 140 && now > cooldownUntil) {
-            title.classList.add("glitching");
-            cooldownUntil = now + 140;
-            window.setTimeout(() => title.classList.remove("glitching"), 120);
-          }
-
-          rafRef.current = requestAnimationFrame(tick);
-        };
-
-        rafRef.current = requestAnimationFrame(tick);
-      } catch (error) {
-        console.error("Beat detection setup failed", error);
-      }
+      // Change the interval (ms) to match the song's beat
+      intervalRef.current = window.setInterval(() => {
+        title.classList.add("glitching");
+        window.setTimeout(() => title.classList.remove("glitching"), 150);
+      }, 500);
     };
 
     const handleInteraction = async () => {
@@ -66,7 +32,7 @@ function Landing() {
           }
           setHasInteracted(true);
           setHintVisible(false);
-          startBeatDetection();
+          startTimedGlitch();
         }
       } catch (error) {
         console.error("Autoplay failed on interaction", error);
@@ -81,10 +47,9 @@ function Landing() {
       window.removeEventListener("click", handleInteraction);
       window.removeEventListener("touchstart", handleInteraction);
       window.removeEventListener("keydown", handleInteraction);
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      if (audioCtxRef.current) {
-        audioCtxRef.current.close().catch(() => {});
-        audioCtxRef.current = null;
+      if (intervalRef.current !== null) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
   }, [hasInteracted]);
