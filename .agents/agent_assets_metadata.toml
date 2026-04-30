@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "_jJSorlE6a6zi84Ue9zNu"
+uri = "file://exports/wind-breaker-project.tar.gz"
+type = "unspecified"
+title = "Wind Breaker — Full Project Export"
