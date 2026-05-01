@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: views
+    description: Page view counter
 paths:
   /healthz:
     get:
@@ -24,6 +26,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /views:
+    get:
+      operationId: getViews
+      tags: [views]
+      summary: Get and increment view count
+      description: Increments the page view counter and returns the new total
+      responses:
+        "200":
+          description: Current view count
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ViewCount"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +48,10 @@ components:
           type: string
       required:
         - status
-
+    ViewCount:
+      type: object
+      properties:
+        count:
+          type: integer
+      required:
+        - count

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { SiDiscord } from "react-icons/si";
+import { useGetViews } from "@workspace/api-client-react";
 
 function Landing() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -9,6 +10,7 @@ function Landing() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
   const [bursts, setBursts] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const { data: viewData } = useGetViews();
 
   useEffect(() => {
     const startTimedGlitch = () => {
@@ -144,6 +146,13 @@ function Landing() {
           [ tap anywhere for sound ]
         </p>
       </div>
+
+      {/* View Counter */}
+      {viewData && (
+        <div className="fade-in absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 select-none tabular-nums">
+          {viewData.count.toLocaleString()} <span className="text-primary/40">views</span>
+        </div>
+      )}
     </main>
   );
 }

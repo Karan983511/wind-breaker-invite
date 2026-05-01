@@ -6,5 +6,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export * from "./healthStatus";
-export * from "./viewCount";
+export interface ViewCount {
+  count: number;
+}

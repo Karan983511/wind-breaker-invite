@@ -8,3 +8,7 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface ViewCount {
+  count: number;
+}

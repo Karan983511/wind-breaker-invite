@@ -13,7 +13,7 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type { HealthStatus, ViewCount } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
 import type { ErrorType } from "../custom-fetch";
@@ -92,6 +92,72 @@ export function useHealthCheck<
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getHealthCheckQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Increments the page view counter and returns the new total
+ * @summary Get and increment view count
+ */
+export const getGetViewsUrl = () => {
+  return `/api/views`;
+};
+
+export const getViews = async (options?: RequestInit): Promise<ViewCount> => {
+  return customFetch<ViewCount>(getGetViewsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetViewsQueryKey = () => {
+  return [`/api/views`] as const;
+};
+
+export const getGetViewsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getViews>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getViews>>, TError, TData>;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetViewsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getViews>>> = ({
+    signal,
+  }) => getViews({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getViews>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetViewsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getViews>>
+>;
+export type GetViewsQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get and increment view count
+ */
+
+export function useGetViews<
+  TData = Awaited<ReturnType<typeof getViews>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getViews>>, TError, TData>;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetViewsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;

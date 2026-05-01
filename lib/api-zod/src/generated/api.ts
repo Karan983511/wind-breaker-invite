@@ -14,3 +14,11 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Increments the page view counter and returns the new total
+ * @summary Get and increment view count
+ */
+export const GetViewsResponse = zod.object({
+  count: zod.number(),
+});
