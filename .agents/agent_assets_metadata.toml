@@ -12,3 +12,9 @@ id = "_4PjYXMu8oTIO_I-F-7IX"
 uri = "file://wind-breaker.tar.gz"
 type = "unspecified"
 title = "wind-breaker.tar.gz — Full source code"
+
+[[outputs]]
+id = "D9w-hKW_h8avuCkwb8mUE"
+uri = "file://wind-breaker-full.tar.gz"
+type = "unspecified"
+title = "wind-breaker-full.tar.gz — Complete project (100% workflow)"
