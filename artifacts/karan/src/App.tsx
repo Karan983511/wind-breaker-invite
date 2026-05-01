@@ -10,7 +10,7 @@ function Landing() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
   const [bursts, setBursts] = useState<Array<{ id: number; x: number; y: number }>>([]);
-  const { data: viewData } = useGetViews();
+  const { data: viewData } = useGetViews({ query: { retry: false, throwOnError: false } });
 
   useEffect(() => {
     const startTimedGlitch = () => {

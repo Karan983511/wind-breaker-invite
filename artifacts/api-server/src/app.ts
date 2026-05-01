@@ -6,6 +6,10 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+// Disable ETag so API responses never return 304 Not Modified,
+// which customFetch treats as an error (response.ok is false for 304).
+app.set("etag", false);
+
 app.use(
   pinoHttp({
     logger,
