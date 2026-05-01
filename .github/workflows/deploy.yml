@@ -2,9 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [main]
 
 permissions:
   contents: read
@@ -13,7 +11,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -23,11 +21,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v2
         with:
-          version: 10
+          version: 8
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -37,16 +35,12 @@ jobs:
         run: pnpm install
 
       - name: Build
-        env:
-          PORT: "3000"
-          BASE_PATH: "/wind-breaker-invite/"
-          NODE_ENV: production
-        run: pnpm --filter @workspace/karan run build
+        run: pnpm run build
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: artifacts/karan/dist/public
+          path: ./artifacts/karan/dist
 
   deploy:
     environment:
