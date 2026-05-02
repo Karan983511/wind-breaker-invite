@@ -113,17 +113,6 @@ function Landing() {
         className="fade-in absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-20 font-mono select-none pl-3"
         style={{ borderLeft: '1px solid rgba(0,255,255,0.25)' }}
       >
-        {/* Username */}
-        <p
-          className="text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-white/40"
-          style={{ textShadow: '0 0 6px rgba(0,255,255,0.3)' }}
-        >
-          <span style={{ color: 'rgba(0,255,255,0.6)' }}>@</span>karankk0415v
-        </p>
-
-        {/* Thin divider */}
-        <div className="my-1.5 h-px" style={{ background: 'rgba(0,255,255,0.12)', width: '100%' }} />
-
         {/* View count */}
         <div className="flex items-center gap-1.5">
           {/* Blinking dot */}
@@ -145,6 +134,17 @@ function Landing() {
             views
           </span>
         </div>
+
+        {/* Thin divider */}
+        <div className="my-1.5 h-px" style={{ background: 'rgba(0,255,255,0.12)', width: '100%' }} />
+
+        {/* Username */}
+        <p
+          className="text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-white/40"
+          style={{ textShadow: '0 0 6px rgba(0,255,255,0.3)' }}
+        >
+          <span style={{ color: 'rgba(0,255,255,0.6)' }}>@</span>karankk0415v
+        </p>
       </div>
 
       {/* Main Content */}
