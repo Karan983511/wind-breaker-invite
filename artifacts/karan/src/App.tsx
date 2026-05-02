@@ -135,9 +135,6 @@ function Landing() {
           </span>
         </div>
 
-        {/* Thin divider */}
-        <div className="my-1.5 h-px" style={{ background: 'rgba(0,255,255,0.12)', width: '100%' }} />
-
         {/* Username */}
         <p
           className="text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-white/40"
