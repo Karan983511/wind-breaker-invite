@@ -110,8 +110,8 @@ function Landing() {
 
       {/* Bottom-left HUD: username + view counter */}
       <div
-        className="fade-in absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-20 font-mono select-none pl-3"
-        style={{ borderLeft: '1px solid rgba(0,255,255,0.25)' }}
+        className="fade-in absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-20 font-mono select-none"
+        style={{}}
       >
         {/* View count */}
         <div className="flex items-center gap-1.5">
