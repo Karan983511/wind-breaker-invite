@@ -108,9 +108,43 @@ function Landing() {
       {/* Dark Gradient Overlay */}
       <div className="fixed inset-0 z-[-1] bg-black/40 bg-gradient-to-b from-transparent via-black/20 to-black/90" />
 
-      {/* Username badge */}
-      <div className="fade-in absolute top-4 left-4 sm:top-6 sm:left-6 z-20 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-mono text-white/50 select-none" style={{ textShadow: '0 0 8px rgba(0, 255, 255, 0.5)' }}>
-        <span className="text-primary/70">@</span>karankk0415v
+      {/* Bottom-left HUD: username + view counter */}
+      <div
+        className="fade-in absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-20 font-mono select-none pl-3"
+        style={{ borderLeft: '1px solid rgba(0,255,255,0.25)' }}
+      >
+        {/* Username */}
+        <p
+          className="text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-white/40"
+          style={{ textShadow: '0 0 6px rgba(0,255,255,0.3)' }}
+        >
+          <span style={{ color: 'rgba(0,255,255,0.6)' }}>@</span>karankk0415v
+        </p>
+
+        {/* Thin divider */}
+        <div className="my-1.5 h-px" style={{ background: 'rgba(0,255,255,0.12)', width: '100%' }} />
+
+        {/* View count */}
+        <div className="flex items-center gap-1.5">
+          {/* Blinking dot */}
+          <span
+            className="inline-block w-[5px] h-[5px] rounded-full"
+            style={{
+              background: 'rgba(0,255,255,0.7)',
+              boxShadow: '0 0 4px rgba(0,255,255,0.8)',
+              animation: 'pulse 2s ease-in-out infinite',
+            }}
+          />
+          <span
+            className="text-[10px] sm:text-[11px] tracking-[0.18em] tabular-nums text-white/60"
+            style={{ textShadow: '0 0 8px rgba(0,255,255,0.4)' }}
+          >
+            {viewData != null ? viewData.count.toLocaleString() : '—'}
+          </span>
+          <span className="text-[8px] sm:text-[9px] tracking-[0.25em] uppercase text-white/25 ml-0.5">
+            views
+          </span>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -147,12 +181,6 @@ function Landing() {
         </p>
       </div>
 
-      {/* View Counter */}
-      {viewData && (
-        <div className="fade-in absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 select-none tabular-nums">
-          {viewData.count.toLocaleString()} <span className="text-primary/40">views</span>
-        </div>
-      )}
     </main>
   );
 }
